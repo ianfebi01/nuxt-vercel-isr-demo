@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     // Set BYPASS_TOKEN env var on Vercel, then trigger with:
     //   curl -H "x-prerender-revalidate: YOUR_TOKEN" https://<app>.vercel.app/isr-demo
     '/isr-demo': { isr: true },
+    '/api/isr-data': { isr: true }
   },
 
   nitro: {
