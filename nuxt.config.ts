@@ -5,28 +5,29 @@ export default defineNuxtConfig({
 
   // ISR (Incremental Static Regeneration) configuration
   routeRules: {
+    // Home page: static prerender
+    '/': { prerender: true },
 
-    // ISR demo page: revalidates every 60 seconds (time-based)
-    // Also supports on-demand revalidation via x-prerender-revalidate header
-    "/**": { isr: true },
+    // ISR demo page: ISR with on-demand revalidation
+    // Set BYPASS_TOKEN env var on Vercel, then trigger with:
+    //   curl -H "x-prerender-revalidate: YOUR_TOKEN" https://<app>.vercel.app/isr-demo
+    '/isr-demo': { isr: true },
   },
 
-  // On-demand ISR revalidation via bypass token
-  // Set BYPASS_TOKEN env var on Vercel, then trigger with:
-  //   curl -H "x-prerender-revalidate: YOUR_TOKEN" https://<app>.vercel.app/isr-demo
   nitro: {
     vercel: {
       config: {
+        // IMPORTANT: Set BYPASS_TOKEN env var in Vercel dashboard, then
+        // use the SAME token in the x-prerender-revalidate header.
         bypassToken: process.env.BYPASS_TOKEN || 'dev-bypass-token',
       },
     },
-    prerender : {
-     routes: [
-      "/isr-demo",
-      "/",
-     ],
-     failOnError : true,
-     crawlLinks  : false,
-   },
+    prerender: {
+      routes: [
+        '/',
+      ],
+      failOnError: true,
+      crawlLinks: false,
+    },
   },
 });
