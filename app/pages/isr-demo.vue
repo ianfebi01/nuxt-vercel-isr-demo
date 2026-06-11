@@ -53,7 +53,7 @@
 // useAsyncData with explicit key ensures the server-rendered data is
 // serialized into the Nuxt payload (window.__NUXT__) and the client
 // hydrates from that payload — never re-fetches, avoiding hydration mismatches.
-const { data, error } = await useAsyncData(
+const { data, error } = useAsyncData(
   'isr-demo-data',
   () => $fetch('/api/isr-data'),
 )
