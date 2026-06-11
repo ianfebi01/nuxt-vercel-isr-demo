@@ -7,8 +7,8 @@
       <ul>
         <li>This page fetches data from <code>jsonplaceholder.typicode.com</code></li>
         <li>The response is cached via <strong>ISR</strong> (Incremental Static Regeneration)</li>
-        <li>Cache revalidates every <strong>60 seconds</strong> automatically</li>
-        <li>You can also trigger <strong>on-demand</strong> revalidation (see below)</li>
+        <li>Revalidation is <strong>on-demand only</strong> via bypass token header</li>
+        <li>Trigger revalidation with curl (see instructions below)</li>
       </ul>
     </section>
 
@@ -18,20 +18,15 @@
       <p>{{ error }}</p>
     </section>
 
-    <!-- Loading state -->
-    <section v-else-if="pending" class="loading-box">
-      <p>⏳ Loading data...</p>
-    </section>
-
-    <!-- Data display -->
-    <section v-else class="data-section">
+    <!-- Data display - always rendered on server, client hydrates from Nuxt payload -->
+    <section v-if="data" class="data-section">
       <div class="timestamp">
-        ⏱️ <strong>Page generated at:</strong> {{ data?.generatedAt }}
+        ⏱️ <strong>Page generated at:</strong> {{ data.generatedAt }}
       </div>
 
       <h2>📋 Blog Posts (from JSONPlaceholder)</h2>
       <div class="posts-grid">
-        <article v-for="post in data?.posts" :key="post.id" class="post-card">
+        <article v-for="post in data.posts" :key="post.id" class="post-card">
           <span class="post-id">#{{ post.id }}</span>
           <h3>{{ post.title }}</h3>
           <p>{{ post.body }}</p>
@@ -46,17 +41,22 @@
       <pre><code>curl -H "x-prerender-revalidate: YOUR_BYPASS_TOKEN" \
   https://your-app.vercel.app/isr-demo</code></pre>
       <p class="hint">
-        The page will be regenerated in the background and the next visitor
-        will see the fresh content. Check the <code>generatedAt</code> timestamp
-        above to verify it worked!
+        Revalidation happens <strong>in the background</strong>. The response
+        to the curl may still show old content — refresh the page in the browser
+        and check the <code>generatedAt</code> timestamp above to verify!
       </p>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-// Fetch data from our server API route (which then calls the free external API)
-const { data, pending, error } = await useFetch('/api/isr-data')
+// useAsyncData with explicit key ensures the server-rendered data is
+// serialized into the Nuxt payload (window.__NUXT__) and the client
+// hydrates from that payload — never re-fetches, avoiding hydration mismatches.
+const { data, error } = await useAsyncData(
+  'isr-demo-data',
+  () => $fetch('/api/isr-data'),
+)
 </script>
 
 <style scoped>
