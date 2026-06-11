@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     // ISR demo page: ISR with on-demand revalidation
     // Set VERCEL_BYPASS_TOKEN env var on Vercel, then trigger with:
     //   curl -H "x-prerender-revalidate: YOUR_TOKEN" https://<app>.vercel.app/isr-demo
-    '/**': { isr: true },
+    '/isr-demo': { isr: true },
   },
   experimental: {
     payloadExtraction: false, // ← disables _payload.json, inlines data into HTML
@@ -28,7 +28,6 @@ export default defineNuxtConfig({
     prerender: {
       routes: [
         '/',
-        '/isr-demo'
       ],
       failOnError: true,
       crawlLinks: false,
