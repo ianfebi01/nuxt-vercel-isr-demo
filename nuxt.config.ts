@@ -14,7 +14,6 @@ export default defineNuxtConfig({
     '/isr-demo': { isr: true },
   },
   experimental: {
-    inlineRouteRules: true,
     payloadExtraction: false, // ← disables _payload.json, inlines data into HTML
   },
 
