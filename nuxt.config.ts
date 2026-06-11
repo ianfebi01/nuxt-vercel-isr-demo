@@ -13,6 +13,10 @@ export default defineNuxtConfig({
     //   curl -H "x-prerender-revalidate: YOUR_TOKEN" https://<app>.vercel.app/isr-demo
     '/isr-demo': { isr: true },
   },
+  experimental: {
+    inlineRouteRules: true,
+    payloadExtraction: false, // ← disables _payload.json, inlines data into HTML
+  },
 
   nitro: {
     vercel: {
