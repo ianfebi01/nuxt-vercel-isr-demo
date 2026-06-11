@@ -38,7 +38,7 @@
     <section class="revalidation-box">
       <h2>⚡ Trigger On-Demand Revalidation</h2>
       <p>Send a GET request with the bypass token header:</p>
-      <pre><code>curl -H "x-prerender-revalidate: YOUR_BYPASS_TOKEN" \
+      <pre><code>curl -H "x-prerender-revalidate: c335a6c586248ce185bd68855b1e70a1f108e7d1d3b32af81202173ee8daa0b6" \
   https://your-app.vercel.app/isr-demo</code></pre>
       <p class="hint">
         Revalidation happens <strong>in the background</strong>. The response
@@ -87,6 +87,7 @@ h2 {
   border-radius: 8px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
+  color: white;
 }
 
 .info-box ul {
