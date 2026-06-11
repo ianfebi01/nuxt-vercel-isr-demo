@@ -87,7 +87,6 @@ h2 {
   border-radius: 8px;
   padding: 1.25rem;
   margin-bottom: 1.5rem;
-  color: white;
 }
 
 .info-box ul {
@@ -178,6 +177,10 @@ pre {
   overflow-x: auto;
   font-size: 0.85rem;
   line-height: 1.5;
+}
+
+code {
+  background-color: #1a202c69;
 }
 
 .hint {
