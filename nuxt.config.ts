@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '/': { prerender: true },
 
     // ISR demo page: ISR with on-demand revalidation
-    // Set BYPASS_TOKEN env var on Vercel, then trigger with:
+    // Set VERCEL_BYPASS_TOKEN env var on Vercel, then trigger with:
     //   curl -H "x-prerender-revalidate: YOUR_TOKEN" https://<app>.vercel.app/isr-demo
     '/isr-demo': { isr: true },
   },
@@ -17,9 +17,9 @@ export default defineNuxtConfig({
   nitro: {
     vercel: {
       config: {
-        // IMPORTANT: Set BYPASS_TOKEN env var in Vercel dashboard, then
+        // IMPORTANT: Set VERCEL_BYPASS_TOKEN env var in Vercel dashboard, then
         // use the SAME token in the x-prerender-revalidate header.
-        bypassToken: process.env.BYPASS_TOKEN || 'dev-bypass-token',
+        bypassToken: process.env.VERCEL_BYPASS_TOKEN || 'dev-bypass-token',
       },
     },
     prerender: {
